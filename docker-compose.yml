@@ -1,0 +1,18 @@
+version: '3.4'
+services:
+  my-package:
+    image: my-package:latest
+    build:
+      context: ./
+      target: BASE
+      dockerfile: Dockerfile
+  my-package-dev:
+    image: my-package-dev:latest
+    volumes:
+      - ./config:/config
+      - ./data/panini-experiment:/root/panini-experiment
+      - ./data/panini_home:/root/.panini
+    build:
+      target: DEV
+      context: ./
+      dockerfile: Dockerfile

@@ -1,0 +1,22 @@
+
+repos:
+  - repo: local
+    hooks:
+      - id: isort
+        name: Arrange imports and reformats code
+        entry: make format
+        language: system
+        types: [python]
+        require_serial: true
+      - id: flake8
+        name: Check code formatting using lint
+        entry: make lint
+        language: system
+        types: [python]
+        require_serial: true
+      - id: update-lockfile
+        name: Update the lock file
+        entry: poetry lock
+        language: system
+        files: 'pyproject.toml'
+        pass_filenames: false

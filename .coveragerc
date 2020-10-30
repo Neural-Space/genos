@@ -1,0 +1,26 @@
+# .coveragerc to control coverage.py
+[run]
+branch = True
+omit =
+    **/virtualenv/*
+    .tox/*
+    .venv/*
+    tests/*
+
+[report]
+# Regexes for lines to exclude from consideration
+exclude_lines =
+    # Have to re-enable the standard pragma
+    pragma: no cover
+
+    # Ignore missing debug-only code:
+    def __repr__
+    if self\.debug
+
+    # Ignore if tests don't hit defensive assertion code:
+    raise AssertionError
+    raise NotImplementedError
+
+    # Ignore non-runnable code
+    if 0:
+    if __name__ == .__main__.:

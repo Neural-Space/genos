@@ -1,0 +1,85 @@
+version: 2.1
+
+orbs:
+  python: circleci/python@0.2.1
+
+
+##################
+# Job Definitions
+##################
+
+jobs:
+  install-dependencies:
+    working_directory: ~/workdir
+    docker:
+      - image: circleci/python:3.7.7
+    steps:
+      - checkout
+
+      - restore_cache:
+          key: deps14-{{ checksum "Makefile" }}
+
+      - run:
+          name: BASH_ENV PATH
+          command: echo "export PATH=$PATH:/home/circleci/.local/bin" >> $BASH_ENV
+
+      - run:
+          name: Install system requirements
+          command: make bootstrap-user
+
+      - save_cache:
+          key: deps1-{{ checksum "Makefile" }}
+          paths:
+            - /home/circleci/.local
+
+      - restore_cache:
+          keys:
+            - deps1-{{ checksum "poetry.lock" }}-{{ checksum "Makefile" }}
+
+      - run:
+          name: Install dependencies
+          command: |
+            poetry config http-basic.neuralspace ${NS_AZURE_ARTIFACTS_USERNAME} ${NS_AZURE_ARTIFACTS_PASSWORD}
+            make poetry-setup
+
+
+      - save_cache:
+          key: deps1-{{ checksum "poetry.lock" }}-{{ checksum "Makefile" }}
+          paths:
+            - ".venv"
+
+      - persist_to_workspace:
+          root: /home/circleci
+          paths:
+            - workdir
+            - .local
+
+  test:
+    working_directory: ~/workdir
+    docker:
+      - image: circleci/python:3.7.7
+    steps:
+      - attach_workspace:
+          at: /home/circleci
+
+      - run:
+          name: BASH_ENV PATH
+          command: echo "export PATH=$PATH:/home/circleci/.local/bin" >> $BASH_ENV
+
+      - run:
+          name: Testing
+          command: make test
+
+
+############
+# Workflows
+############
+
+workflows:
+  version: 2
+  build_test:
+    jobs:
+      - install-dependencies
+      - test:
+          requires:
+            - install-dependencies

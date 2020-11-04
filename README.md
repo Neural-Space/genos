@@ -1,3 +1,4 @@
+[![CircleCI](https://circleci.com/gh/Neural-Space/genos.svg?style=svg&circle-token=3658f580f8183f441023a1a4234716410bd74338)](https://app.circleci.com/pipelines/github/Neural-Space)
 # Template Python Project
 This is a template for all python projects. It has the following:
 

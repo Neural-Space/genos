@@ -4,8 +4,8 @@ import copy
 from typing import Any, Dict, List, Optional
 
 import pytest
-from my_package import utils
-from my_package.utils import ObjectConfig, RecursiveClassInstantiationError
+from genos import utils
+from genos.utils import ObjectConfig, RecursiveClassInstantiationError
 from omegaconf import DictConfig, OmegaConf
 
 

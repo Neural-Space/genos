@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "my_package"
+name = "genos"
 version = "0.1.0"
 description = "some description..."
 authors = ["Ayushman Dash <ayushman@neuralspace.ai>"]

@@ -69,14 +69,14 @@ conda-env-setup:
 .PHONY: format
 format:
 	# calling make _format within poetry make it so that we only init poetry once
-	poetry run isort -rc -y src/my_package tests
-	poetry run black src/my_package tests
+	poetry run isort -rc -y src/genos tests
+	poetry run black src/genos tests
 
 
 # Flake8 to check code formatting
 .PHONY: lint
 lint:
-	poetry run flake8 src/my_package tests
+	poetry run flake8 src/genos tests
 
 N_THREADS=1
 # Run tests

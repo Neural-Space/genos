@@ -1,16 +1,14 @@
 [tool.poetry]
 name = "genos"
+# This version is ignored. Version is
 version = "0.1.0"
-description = "some description..."
+description = "Instantiate objects and call functions using dictionary configs in Python using Genos."
 authors = ["Ayushman Dash <ayushman@neuralspace.ai>"]
 
-[[tool.poetry.source]]
-name = "neuralspace"
-url = "https://pkgs.dev.azure.com/neuralspace/_packaging/neuralspace/pypi/simple/"
 
 [tool.poetry.dependencies]
 python = "^3.7"
-panini = "^0.5.18"
+omegaconf = "^2.0.4"
 
 [tool.poetry.dev-dependencies]
 isort = "^4.3.21"

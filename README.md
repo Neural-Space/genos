@@ -1,58 +1,77 @@
 [![CircleCI](https://circleci.com/gh/Neural-Space/genos.svg?style=svg&circle-token=3658f580f8183f441023a1a4234716410bd74338)](https://app.circleci.com/pipelines/github/Neural-Space)
-# Template Python Project
-This is a template for all python projects. It has the following:
 
-- **A Makefile** with various helpful targets. E.g.,
-  ```bash
-  # to install system level dependencies
-  make bootstrap
-  
-  # install virtual environment and project level dependencies
-  make install
-  
-  # run unit tests
-  make test
-  
-  # run black code formatting and isort
-  make format
-  
-  # to run flake8 and validate code formatting
-  make lint
-  ```
-- **A pre-commit config** to validate code formatting before commits are made.
-- **A Pull Request (PR) Template** with a checklist for PRs
-- A Dockerfile
-- A Docker-Compose file
-- A `setup.py` file in case you want to package it.
-- A Coverage config in `.coveragerc`
-- A `.gitignore` file
-- A `.dockerignore` file
-- A CircleCI config file `.circleci/config.yml`
+# Genos
+Instantiate objects and call functions using dictionary configs in Python using Genos.
 
+# Install
 
-# Project Structure
-
-All source files go inside the `./src/my_package/`
-
-# `PYTHONPATH` setup
-
-- Pycharm: Mark `./src` as content root
-- Others: Set this environment variable `export PYTHONPATH=./src`
-
-# Configuring NS Private PyPi repo
-
-Get username and password from the project Admin
-
+## Pip
 ```bash
-poetry config http-basic.neuralspace <private-pypi-username> <private-pypi-password>
+pip install genos
 ```
 
-# Renaming this Project
+## Poetry
+```bash
+poetry add genos
+```
 
-Note that the name of this python package is `my_package`. Take a look at the `./src` folder.
-Hence, `my_package` has been used in the following files.
-- Makefile
-- Dockerfile
-- `.circleci/config.yml`
+## from source
 
-Make sure to rename `my_package` to `<your-package-name>` while using this template.
+```bash
+
+```
+
+# Basic Usage
+
+### non-recursive
+
+```python
+
+```
+
+### recursive
+
+```python
+
+```
+
+# Advanced 
+
+### 3rd party example with deep recursion
+
+```python
+
+```
+
+### ML example
+
+```python
+
+```
+
+# Dev Setup
+
+## Prerequisites
+
+- Python >=3.5
+- Tested on Mac 10.15.6 Catalina, Ubuntu 18.04
+
+## installation
+```shell script
+# clone
+make install-system-deps
+# what happens here
+make install-deps
+# make
+```
+
+### Testing and Code formating
+
+```
+make unit-test
+make coverage
+make test-coverage
+```
+
+# Contribution guide
+Read contrib guide here

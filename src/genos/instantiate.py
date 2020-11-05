@@ -1,37 +1,17 @@
 """
 Authors:
- - Ayushman Dash <dash.ayushman.99@gmail.com>
+ - Ayushman Dash <ayushman@neuralspace.ai>
+ - Kushal Jain <kushal@neuralspace.ai>
 """
 
 import builtins
 import copy
-
-# import hashlib
 import logging
 from dataclasses import dataclass, field
-
-# import subprocess
-# import zipfile
-# from collections import Counter
 from importlib import import_module
-
-# from pathlib import Path
 from typing import Any, Callable, Dict, List, Type, Union
 
 from omegaconf import MISSING, DictConfig, OmegaConf, _utils, read_write
-
-# from tqdm import tqdm
-# from transformers import (
-#     AutoModel,
-#     AutoTokenizer,
-#     PreTrainedModel,
-#     PreTrainedTokenizer,
-#     PreTrainedTokenizerFast,
-# )
-
-# from panini.artifact_manager import ArtifactManager
-# from panini.constants import panini_home
-# from panini.types.generic import ObjectConfig
 
 logger = logging.getLogger(__name__)
 
@@ -395,7 +375,6 @@ def recursive_instantiate(
         else:
             assert callable(clazz)
             return __call_callable(clazz, config, *args, **params)
-        # return clazz(*args, **params)
 
     except Exception as e:
         raise RecursiveClassInstantiationError(

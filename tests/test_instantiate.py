@@ -1,11 +1,9 @@
 import copy
-
-# from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import pytest
-from genos import utils
-from genos.utils import ObjectConfig, RecursiveClassInstantiationError
+from genos import instantiate
+from genos.instantiate import ObjectConfig, RecursiveClassInstantiationError
 from omegaconf import DictConfig, OmegaConf
 
 
@@ -45,22 +43,6 @@ class Level1:
 
             return self.a_1 == other.a_1
         return NotImplemented
-
-
-# class EnumComponent:
-#     def __init__(self, language: SupportedLanguage, another_arg: Level1):
-#         self.language = language
-#         self.another_arg = another_arg
-
-#     def __eq__(self, other: Any) -> Any:
-#         """Overrides the default implementation"""
-#         if isinstance(other, EnumComponent):
-
-#             return (
-#                 self.language == other.language
-#                 and self.another_arg == other.another_arg
-#             )
-#         return NotImplemented
 
 
 # The following code block was taken from Hydra
@@ -157,34 +139,34 @@ def fum(k: int) -> int:
 
 
 @pytest.mark.parametrize(  # type: ignore
-    "path, expected_type", [("tests.test_utils.Bar", Bar)]
+    "path, expected_type", [("tests.test_instantiate.Bar", Bar)]
 )
 def test_get_class(path: str, expected_type: type) -> None:
-    assert utils.get_class(path) == expected_type
+    assert instantiate.get_class(path) == expected_type
 
 
 @pytest.mark.parametrize(  # type: ignore
     "path, return_value, expected_error",
     [
-        ("tests.test_utils.some_method", 42, None),
-        ("tests.test_utils.invalid_method", None, ValueError),
+        ("tests.test_instantiate.some_method", 42, None),
+        ("tests.test_instantiate.invalid_method", None, ValueError),
         ("cannot.locate.this.package", None, ValueError),
-        ("tests.test_utils.non_callable_object", None, ValueError),
+        ("tests.test_instantiate.non_callable_object", None, ValueError),
     ],
 )
 def test_get_method(path: str, return_value: Any, expected_error: Exception) -> None:
     if expected_error is not None:
         with pytest.raises(expected_error):
-            assert utils.get_method(path)() == return_value
+            assert instantiate.get_method(path)() == return_value
     else:
-        assert utils.get_method(path)() == return_value
+        assert instantiate.get_method(path)() == return_value
 
 
 @pytest.mark.parametrize(  # type: ignore
-    "path, return_value", [("tests.test_utils.Bar.static_method", 43)]
+    "path, return_value", [("tests.test_instantiate.Bar.static_method", 43)]
 )
 def test_get_static_method(path: str, return_value: Any) -> None:
-    assert utils.get_static_method(path)() == return_value
+    assert instantiate.get_static_method(path)() == return_value
 
 
 @pytest.mark.parametrize(  # type: ignore
@@ -192,7 +174,7 @@ def test_get_static_method(path: str, return_value: Any) -> None:
     [
         (
             {
-                "cls": "tests.test_utils.Bar",
+                "cls": "tests.test_instantiate.Bar",
                 "params": {"a": 10, "b": 20, "c": 30, "d": 40},
             },
             None,
@@ -203,7 +185,7 @@ def test_get_static_method(path: str, return_value: Any) -> None:
             {
                 "all_params": {
                     "main": {
-                        "cls": "tests.test_utils.Bar",
+                        "cls": "tests.test_instantiate.Bar",
                         "params": {"a": 10, "b": 20, "c": "${all_params.aux.c}"},
                     },
                     "aux": {"c": 30},
@@ -214,59 +196,65 @@ def test_get_static_method(path: str, return_value: Any) -> None:
             Bar(10, 20, 30, 40),
         ),
         (
-            {"cls": "tests.test_utils.Bar", "params": {"b": 20, "c": 30}},
+            {"cls": "tests.test_instantiate.Bar", "params": {"b": 20, "c": 30}},
             None,
             {"a": 10, "d": 40},
             Bar(10, 20, 30, 40),
         ),
         (
-            {"cls": "tests.test_utils.Bar", "params": {"b": 200, "c": "${params.b}"}},
+            {
+                "cls": "tests.test_instantiate.Bar",
+                "params": {"b": 200, "c": "${params.b}"},
+            },
             None,
             {"a": 10, "d": 40},
             Bar(10, 200, 200, 40),
         ),
         # Check class and static methods
         (
-            {"cls": "tests.test_utils.Baz.class_method", "params": {"y": 10}},
+            {"cls": "tests.test_instantiate.Baz.class_method", "params": {"y": 10}},
             None,
             {},
             Baz(11),
         ),
         (
-            {"cls": "tests.test_utils.Baz.static_method", "params": {"z": 43}},
+            {"cls": "tests.test_instantiate.Baz.static_method", "params": {"z": 43}},
             None,
             {},
             43,
         ),
         # Check nested types and static methods
-        ({"cls": "tests.test_utils.Fii", "params": {}}, None, {}, Fii(Baz(10))),
+        ({"cls": "tests.test_instantiate.Fii", "params": {}}, None, {}, Fii(Baz(10))),
         (
-            {"cls": "tests.test_utils.fii.a.class_method", "params": {"y": 10}},
+            {"cls": "tests.test_instantiate.fii.a.class_method", "params": {"y": 10}},
             None,
             {},
             Baz(11),
         ),
         (
-            {"cls": "tests.test_utils.fii.a.static_method", "params": {"z": 43}},
+            {"cls": "tests.test_instantiate.fii.a.static_method", "params": {"z": 43}},
             None,
             {},
             43,
         ),
         # Check that default value is respected
         (
-            {"cls": "tests.test_utils.Bar", "params": {"b": 200, "c": "${params.b}"}},
+            {
+                "cls": "tests.test_instantiate.Bar",
+                "params": {"b": 200, "c": "${params.b}"},
+            },
             None,
             {"a": 10},
             Bar(10, 200, 200, "default_value"),
         ),
         (
-            {"cls": "tests.test_utils.Bar", "params": {}},
+            {"cls": "tests.test_instantiate.Bar", "params": {}},
             None,
             {"a": 10, "b": 20, "c": 30},
             Bar(10, 20, 30, "default_value"),
         ),
         # call a function from a module
-        ({"cls": "tests.test_utils.fum", "params": {"k": 43}}, None, {}, 44),
+        ({"cls": "tests.test_instantiate.fum", "params": {"k": 43}}, None, {}, 44),
         # Check builtins
         ({"cls": "builtins.str", "params": {"object": 43}}, None, {}, "43"),
     ],
@@ -284,7 +272,7 @@ def test_class_instantiate(
     else:
         config_to_pass = OmegaConf.select(conf, key_to_get_config)
     config_to_pass_copy = copy.deepcopy(config_to_pass)
-    obj = utils.instantiate(config_to_pass, **kwargs_to_pass)
+    obj = instantiate.instantiate(config_to_pass, **kwargs_to_pass)
     assert obj == expected
     # make sure config is not modified by instantiate
     assert config_to_pass == config_to_pass_copy
@@ -294,10 +282,10 @@ def test_class_instantiate_pass_omegaconf_node() -> Any:
     pc = ObjectConfig()
     # This is a bit clunky because it exposes a problem with the backport of dataclass on Python 3.6
     # see: https://github.com/ericvsmith/dataclasses/issues/155
-    pc.cls = "tests.test_utils.Bar"
+    pc.cls = "tests.test_instantiate.Bar"
     pc.params = {"b": 200, "c": {"x": 10, "y": "${params.b}"}}
     conf = OmegaConf.structured(pc)
-    obj = utils.instantiate(conf, **{"a": 10, "d": Foo(99)})
+    obj = instantiate.instantiate(conf, **{"a": 10, "d": Foo(99)})
     assert obj == Bar(10, 200, {"x": 10, "y": 200}, Foo(99))
     assert OmegaConf.is_config(obj.c)
 
@@ -305,14 +293,20 @@ def test_class_instantiate_pass_omegaconf_node() -> Any:
 def test_class_warning() -> None:
     expected = Bar(10, 20, 30, 40)
     config = OmegaConf.structured(
-        {"cls": "tests.test_utils.Bar", "params": {"a": 10, "b": 20, "c": 30, "d": 40}}
+        {
+            "cls": "tests.test_instantiate.Bar",
+            "params": {"a": 10, "b": 20, "c": 30, "d": 40},
+        }
     )
-    assert utils.instantiate(config) == expected
+    assert instantiate.instantiate(config) == expected
 
     config = OmegaConf.structured(
-        {"cls": "tests.test_utils.Bar", "params": {"a": 10, "b": 20, "c": 30, "d": 40}}
+        {
+            "cls": "tests.test_instantiate.Bar",
+            "params": {"a": 10, "b": 20, "c": 30, "d": 40},
+        }
     )
-    assert utils.instantiate(config) == expected
+    assert instantiate.instantiate(config) == expected
 
 
 # End Hydra block
@@ -323,13 +317,13 @@ def test_class_warning() -> None:
     [
         (
             {
-                "cls": "tests.test_utils.Level1",
+                "cls": "tests.test_instantiate.Level1",
                 "params": {
                     "a_1": {
-                        "cls": "tests.test_utils.Level2",
+                        "cls": "tests.test_instantiate.Level2",
                         "params": {
                             "a_2": {
-                                "cls": "tests.test_utils.Level3",
+                                "cls": "tests.test_instantiate.Level3",
                                 "params": {"a_3": "a_3", "b_3": 11},
                             },
                             "b_2": 42,
@@ -356,7 +350,7 @@ def test_recursive_instantiate(
     else:
         config_to_pass = OmegaConf.select(conf, key_to_get_config)
     config_to_pass_copy = copy.deepcopy(config_to_pass)
-    obj = utils.recursive_instantiate(config_to_pass, **kwargs_to_pass)
+    obj = instantiate.recursive_instantiate(config_to_pass, **kwargs_to_pass)
     assert obj == expected
     # make sure config is not modified by instantiate
     assert config_to_pass == config_to_pass_copy
@@ -367,19 +361,19 @@ def test_recursive_instantiate(
     [
         ({"cls": "some.path.that.will.fail", "params": {}}, [], Exception, Exception),
         (
-            {"cls": "tests.test_utils.SomeLevel", "params": {}},
+            {"cls": "tests.test_instantiate.SomeLevel", "params": {}},
             [],
             ValueError,
             RecursiveClassInstantiationError,
         ),
         (
-            {"cls": "tests.test_utils.SomeLevel", "params": {}},
+            {"cls": "tests.test_instantiate.SomeLevel", "params": {}},
             [],
             ValueError,
             RecursiveClassInstantiationError,
         ),
         (
-            {"classsss": "tests.test_utils.SomeLevel", "params": {}},
+            {"classsss": "tests.test_instantiate.SomeLevel", "params": {}},
             [],
             ValueError,
             RecursiveClassInstantiationError,
@@ -405,7 +399,7 @@ def test_invalid_instantiate(
     else:
         conf = input_conf
     with pytest.raises(expected_instantiate_exception):
-        utils.instantiate(conf)
+        instantiate.instantiate(conf)
 
     with pytest.raises(expected_recursive_instantiate_exception):
-        utils.recursive_instantiate(conf)
+        instantiate.recursive_instantiate(conf)

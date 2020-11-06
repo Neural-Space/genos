@@ -14,12 +14,34 @@ pip install genos
 ```bash
 poetry add genos
 ```
+# Dev Setup
 
-## from source
+## Prerequisites
 
-```bash
+- Python >=3.5
+- Tested on Mac 10.15.6 Catalina, Ubuntu 18.04
+
+## installation
+```shell script
+# clone the repo
+$ git clone https://github.com/Neural-Space/genos.git
+# Install system-level dependencies
+$ make install-system-deps
+$ # Install environment level dependencies
+make install-deps
+```
+
+### Testing and Code formating
 
 ```
+# run the tests to make sure everything works
+make unit-test
+# check coverage of the code
+make test-coverage
+```
+
+# Contribution guide
+Read contrib guide [here](https://github.com/Neural-Space/genos/blob/%232-advanced-docs/CONTRIBUTING.md).
 
 # Basic Usage
 
@@ -142,7 +164,7 @@ class AffineLayer(nn.Module):
         
 class LSTMLayer(nn.Module):
     '''
-    A wrapper over for LSTM layer.
+    A wrapper over LSTM layer.
     '''
     def __init__(self, input_size, hidden_size, batch_first, dropout):
         super().__init__()
@@ -206,29 +228,4 @@ print(out.shape)
 # [32, 100, 256]
 ```
 
-# Dev Setup
 
-## Prerequisites
-
-- Python >=3.5
-- Tested on Mac 10.15.6 Catalina, Ubuntu 18.04
-
-## installation
-```shell script
-# clone
-make install-system-deps
-# what happens here
-make install-deps
-# make
-```
-
-### Testing and Code formating
-
-```
-make unit-test
-make coverage
-make test-coverage
-```
-
-# Contribution guide
-Read contrib guide here

@@ -27,21 +27,21 @@ poetry add genos
 $ git clone https://github.com/Neural-Space/genos.git
 # Install system-level dependencies
 $ make install-system-deps
-$ # Install environment level dependencies
-make install-deps
+ # Install environment level dependencies
+$ make install-deps
 ```
 
 ### Testing and Code formating
 
-```
+```shell script
 # run the tests to make sure everything works
-make unit-test
+$ make unit-test
 # check coverage of the code
-make test-coverage
+$ make test-coverage
 ```
 
 # Contribution guide
-Read contrib guide [here](https://github.com/Neural-Space/genos/blob/%232-advanced-docs/CONTRIBUTING.md).
+Read the contribution guideline over [here](https://github.com/Neural-Space/genos/blob/%232-advanced-docs/CONTRIBUTING.md).
 
 # Basic Usage
 

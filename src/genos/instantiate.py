@@ -324,7 +324,7 @@ def instantiate_argument(object_config_argument: Any):
 
 
 def recursive_instantiate(
-    config: Union[ObjectConfig, DictConfig], *args: Any, **kwargs: Any
+    config: Union[ObjectConfig, DictConfig, dict], *args: Any, **kwargs: Any
 ) -> Any:
     """This function instantiates a class recursively using an ObjectConfig.
     Args:
@@ -338,6 +338,9 @@ def recursive_instantiate(
        - instance of the class
     """
     import copy
+
+    if isinstance(config, Dict):
+        config = OmegaConf.create(config)
 
     assert config is not None, "Input config is None"
     # copy config to avoid mutating it when merging with kwargs

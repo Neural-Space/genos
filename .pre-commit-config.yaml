@@ -4,13 +4,13 @@ repos:
     hooks:
       - id: isort
         name: Arrange imports and reformats code
-        entry: make format
+        entry: make code-format
         language: system
         types: [python]
         require_serial: true
       - id: flake8
         name: Check code formatting using lint
-        entry: make lint
+        entry: make quality-check
         language: system
         types: [python]
         require_serial: true

@@ -25,7 +25,7 @@ jobs:
 
       - run:
           name: Install system requirements
-          command: make bootstrap-user
+          command: make install-system-deps
 
       - save_cache:
           key: deps1-{{ checksum "Makefile" }}
@@ -39,7 +39,6 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            poetry config http-basic.neuralspace ${NS_AZURE_ARTIFACTS_USERNAME} ${NS_AZURE_ARTIFACTS_PASSWORD}
             make poetry-setup
 
 
@@ -68,7 +67,7 @@ jobs:
 
       - run:
           name: Testing
-          command: make test
+          command: make unit-test
 
 
 ############

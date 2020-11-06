@@ -6,41 +6,25 @@ SYSTEM_DEPENDENCIES := poetry==1.1.3 pre-commit coveralls flake8
 check-py3:
 	./utility-scripts/check_python37.sh
 
-.PHONY: install-system-deps
-install-system-deps:
+.PHONY: install-system-python-deps
+install-system-python-deps:
 	pip install -U $(SYSTEM_DEPENDENCIES)
 
 
-.PHONY: install-system-deps-user
-install-system-deps-user:
+.PHONY: install-system-python-deps
+install-system-python-deps-user:
 	pip install --user -U $(SYSTEM_DEPENDENCIES)
 
 ## To install system level dependencies
-.PHONY: bootstrap
-bootstrap: check-py3 install-system-deps
-	curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+.PHONY: install-system-deps
+install-system-deps: check-py3 install-system-python-deps
 
-## Install system dependencies in user dir (Linux)
-.PHONY: bootstrap-user
-bootstrap-user: check-py3 install-system-deps-user
-	curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-
-.PHONY: bootstrap-mac
-bootstrap-mac: check-py3 install-system-deps
-	brew install azure-cli
-
-## Install system dependencies in user dir (Linux)
-.PHONY: bootstrap-user-mac
-bootstrap-user-mac: check-py3 install-system-deps-user
-	brew install azure-cli
 
 ## Setup poetry
 .PHONY: poetry-setup
 poetry-setup:
 	poetry config virtualenvs.in-project true
 	poetry run pip install pip==20.0.2
-	poetry install --no-root
-	poetry run pip install azure-keyvault-secrets azure.identity
 	poetry install
 
 ## Setup pre-commit
@@ -50,39 +34,28 @@ pre-commit-setup:
 
 
 # Setup virtual environment and dependencies
-.PHONY: install
-install: pre-commit-setup poetry-setup
+.PHONY: install-deps
+install-deps: pre-commit-setup poetry-setup
 
-# Environment setup for Conda
-.PHONY: conda-env-setup
-conda-env-setup:
-	mkdir -p ${CONDA_PREFIX}/etc/conda/activate.d
-	mkdir -p ${CONDA_PREFIX}/etc/conda/deactivate.d
-	touch ${CONDA_PREFIX}/etc/conda/activate.d/env_vars.sh
-	touch ${CONDA_PREFIX}/etc/conda/deactivate.d/env_vars.sh
-	echo "export CONDA_OLD_PATH=${PATH}" >> ${CONDA_PREFIX}/etc/conda/activate.d/env_vars.sh
-	echo "export PATH=${HOME}/.local/bin:${PATH}" >> ${CONDA_PREFIX}/etc/conda/activate.d/env_vars.sh
-	echo "unset PATH" >> ${CONDA_PREFIX}/etc/conda/deactivate.d/env_vars.sh
-	echo "export PATH=${CONDA_OLD_PATH}" >> ${CONDA_PREFIX}/etc/conda/deactivate.d/env_vars.sh
 
 # Format code
-.PHONY: format
-format:
+.PHONY: code-format
+code-format:
 	# calling make _format within poetry make it so that we only init poetry once
-	poetry run isort -rc -y src/my_package tests
-	poetry run black src/my_package tests
+	poetry run isort -rc -y src/genos tests
+	poetry run black src/genos tests
 
 
 # Flake8 to check code formatting
-.PHONY: lint
-lint:
-	poetry run flake8 src/my_package tests
+.PHONY: quality-check
+quality-check:
+	poetry run flake8 src/genos tests
 
-N_THREADS=1
+
 # Run tests
-.PHONY: test
-test:
-	PYTHONPATH='./src/' poetry run pytest tests/ -s -n ${N_THREADS} -vv
+.PHONY: unit-test
+unit-test:
+	PYTHONPATH='./src/' poetry run pytest tests/ -s
 
 # Run coverage
 .PHONY: coverage
@@ -94,4 +67,4 @@ coverage:
 
 # Run tests and coverage
 .PHONY: test-coverage
-test-coverage: test coverage
+test-coverage: unit-test coverage

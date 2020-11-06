@@ -1,5 +1,5 @@
-[![CircleCI](https://circleci.com/gh/Neural-Space/genos.svg?style=svg&circle-token=3658f580f8183f441023a1a4234716410bd74338)](https://app.circleci.com/pipelines/github/Neural-Space)
-
+[![CircleCI](https://circleci.com/gh/Neural-Space/genos.svg?style=sheild&circle-token=3658f580f8183f441023a1a4234716410bd74338)](https://app.circleci.com/pipelines/github/Neural-Space)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 # Genos
 Instantiate objects and call functions using dictionary configs in Python using Genos.
 

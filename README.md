@@ -344,7 +344,7 @@ print(result)
 
 ## Prerequisites
 
-- Python >=3.5
+- Python >=3.7, <4
 - Tested on Mac 10.15.6 Catalina, Ubuntu 18.04
 
 

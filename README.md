@@ -21,7 +21,7 @@ poetry add genos
 - Python >=3.5
 - Tested on Mac 10.15.6 Catalina, Ubuntu 18.04
 
-## installation
+## Installation
 ```shell script
 # clone the repo
 $ git clone https://github.com/Neural-Space/genos.git

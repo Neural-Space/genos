@@ -24,3 +24,5 @@ exclude_lines =
     # Ignore non-runnable code
     if 0:
     if __name__ == .__main__.:
+omit =
+    src/genos/examples/*

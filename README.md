@@ -3,50 +3,25 @@
 # Genos
 Instantiate objects and call functions using dictionary configs in Python using Genos.
 
+
 # Install
 
-## Pip
+### Pip
 ```bash
 pip install genos
 ```
 
-## Poetry
+### Poetry
 ```bash
 poetry add genos
 ```
-# Dev Setup
-
-## Prerequisites
-
-- Python >=3.5
-- Tested on Mac 10.15.6 Catalina, Ubuntu 18.04
-
-## Installation
-```shell script
-# clone the repo
-$ git clone https://github.com/Neural-Space/genos.git
-# Install system-level dependencies
-$ make install-system-deps
- # Install environment level dependencies
-$ make install-deps
-```
-
-### Testing and Code formating
-
-```shell script
-# run the tests to make sure everything works
-$ make unit-test
-# check coverage of the code
-$ make test-coverage
-```
-
-# Contribution guide
-Read the contribution guideline over [here](https://github.com/Neural-Space/genos/blob/%232-advanced-docs/CONTRIBUTING.md).
 
 # Basic Usage
 
-The following examples will show how this library can make your life easier. First, let's consider a basic example where we simply instantiate a single class. 
+The following examples will show how this library can make your life easier by letting you instantiate python objects from dictionaries.
+First, let's consider a basic example where we simply instantiate a single class. 
 
+### Single Class Instantiation
 ```python
 class King:
     def __init__(self, name:str, queen:str, allegiance:str):
@@ -60,12 +35,16 @@ class King:
     def print_name(self):
         print(self.name)
 ```
-We need to pass 3 parameters to instantiate this class. Note that these classes are located in the `/examples/example.py` file and this will change according to your folder-structure. So, let's say we wish to instantiate a `King` object for Eddard Stark because, afterall, _Winter is coming._
+
+We need to pass 3 parameters to instantiate this class. 
+Note that these classes are located in the `genos.examples.*` subpackage. 
+So, let's say we wish to instantiate a `King` object for Eddard Stark because, afterall, _Winter is coming._
+
 ```python
 from genos import recursive_instantiate
 
 ned = {
-    "cls": "examples.example.King",
+    "cls": "genos.examples.King",
     "params":{
         "name": "Eddard Stark",
         "queen": "Catelyn Stark",
@@ -78,12 +57,13 @@ print(obj)
 # Name:Eddard Stark
 # Queen:Catelyn Stark
 # Allegiance:Robert Baratheon
-
-obj.print_name()
-# Eddard Stark
 ```
 
-Well, this seemed quite simple. But rarely are things so simple in life. Consider another class that takes an instance of `King` as a parameter.
+### Recursive Class Instantiation
+
+Well, this seemed quite simple. 
+But rarely are things so simple in life. 
+Consider another class that takes an instance of `King` as a parameter.
 
 ```python
 class House:
@@ -96,13 +76,18 @@ class House:
         return f"King:{self.king.name}\nHome:{self.home}\nSigil:{self.sigil}"
 
 ```
-This is where recursive instantiation comes into action. To initialize an object for this class, we can very easily create a nested dictionary and pass it to our magic method. Of course, we'll be instantiating an object for House Stark.
+
+This is where recursive instantiation comes into action. 
+To initialize an object for this class, we can very easily create a nested dictionary and pass it to our magic method. 
+Of course, we'll be instantiating an object for House Stark.
 ```python
+from genos import recursive_instantiate
+
 stark = {
-    "cls": "examples.example.House",
+    "cls": "genos.examples.House",
     "params": {
         "king":{
-            "cls": "examples.example.King",
+            "cls": "genos.examples.King",
             "params":{
                 "name": "Eddard Stark",
                 "queen": "Catelyn Stark",
@@ -121,14 +106,102 @@ print(obj)
 # Home:Winterfell
 # Sigil:Direwolf
 ```
-# Advanced 
 
-### ML example
-Such workflows where we need to instantiate multiple classes recursively is more evident in Deep Learning and related fields. We created this tool to make things easier for us. The following example shows a scenario where you need different components/modules to create your own custom neural network for some specific task. The individual classes are merely wrappers around `PyTorch` functions. Let's get started.
+### Instantiation Using Positional Arguments
+
+```python
+from genos import recursive_instantiate
+
+stark = {
+    "cls": "genos.examples.House",
+    "args": [
+        {
+            "cls": "genos.examples.King",
+            "params":{
+                "name": "Eddard Stark",
+                "queen": "Catelyn Stark",
+                "allegiance": "Robert Baratheon"
+                }
+        },
+        "Winterfell",
+        "Direwolf"
+    ]
+}
+
+obj = recursive_instantiate(stark)
+print(obj)
+# output
+# King:Eddard Stark
+# Home:Winterfell
+# Sigil:Direwolf
+```
+
+### Instantiation Using Positional and Keyword Arguments
+
+```python
+from genos import recursive_instantiate
+
+stark = {
+    "cls": "genos.examples.House",
+    "args": [
+        {
+            "cls": "genos.examples.King",
+            "params":{
+                "name": "Eddard Stark",
+                "queen": "Catelyn Stark",
+                "allegiance": "Robert Baratheon"
+                }
+        }
+    ],
+    "params": {
+        "home":"Winterfell",
+        "sigil":"Direwolf"
+    }
+}
+
+obj = recursive_instantiate(stark)
+print(obj)
+# output
+# King:Eddard Stark
+# Home:Winterfell
+# Sigil:Direwolf
+```
+
+### Call A Function
+
+```python
+from genos import recursive_instantiate
+
+function_call = {
+    "cls": "genos.examples.multiply",
+    "args": [12, 1.3]
+}
+
+result = recursive_instantiate(function_call)
+print(result)
+# output
+# 15.600000000000001
+```
+
+# Advanced Usage
+
+### Deep Learning Example using PyTorch
+
+For running the following examples you will need to install `Pytorch`.
+
+```shell script
+pip install torch
+```
+
+Such workflows where we need to instantiate multiple classes recursively is more evident in Deep Learning and related fields. 
+**TODO**
+We created this tool to make things easier for us. 
+The following example shows a scenario where you need different components/modules to create your own custom neural network for some specific task. The individual classes are merely wrappers around `PyTorch` functions. Let's get started.
+
+The following example classes can be found in `genos.examples.complex_examples.py`.
 
 ```python
 from torch import nn
-import torch
 
 class ActivationLayer(nn.Module):
     '''
@@ -175,7 +248,9 @@ class LSTMLayer(nn.Module):
         output, _ = self.lstm(x)
         return self.dropout(output)        
 ```
-The three classes above will now be used to create a custom neural network. Note carefully that in order to instantiate an `AffineLayer`, we need to pass an object of `ActivationLayer`. The `CustomModel` will comprise of two components: `AffineLayer` and `LSTMLayer`.
+The three classes above will now be used to create a custom neural network. 
+Note carefully that in order to instantiate an `AffineLayer`, we need to pass an object of `ActivationLayer`. 
+The `CustomModel` will comprise of two components: `AffineLayer` and `LSTMLayer`.
 
 ```python
 
@@ -189,31 +264,37 @@ class CustomModel(nn.Module):
     def forward(self, x):
         return self.affine_layer(self.lstm_layer(x))
 ```
+
 The instantiation of this class using genos will be as follows.
+
 ```python
 from genos import recursive_instantiate
 
 custom_obj = \
 {
-    "cls": "examples.example.CustomModel",
+    "cls": "genos.examples.CustomModel",
     "params": {
         "affine_layer": {
-            "cls": "examples.example.AffineLayer",
-            "params": {
-                "in_features": 256,
-                "out_features": 256,
-                "activation": {
-                    "cls": "examples.example.ActivationLayer",
-                    "params": {
-                        "activation": "relu"
+            {
+                "cls": "examples.example.AffineLayer",
+                "params": {
+                    "in_features": 256,
+                    "out_features": 256,
+                    "activation": {
+                        "cls": "genos.examples.ActivationLayer",
+                        "params": {
+                            "activation": "relu"
+                        }
                     }
                 }
             },
-            "cls": "sexamples.example.LSTMLayer",
-            "params":{
-                "input_size": 256,
-                "hidden_size":256,
-                "batch_first":True,
+            {
+                "cls": "genos.examples.LSTMLayer",
+                "params":{
+                    "input_size": 256,
+                    "hidden_size":256,
+                    "batch_first":True,
+                }
             }
         }
         
@@ -228,4 +309,65 @@ print(out.shape)
 # [32, 100, 256]
 ```
 
+### Get Class Reference from Class Path
 
+```python
+from genos import get_class
+
+class_path = "genos.examples.King"
+class_reference = get_class(class_path)
+
+eddard_stark = class_reference(name="Eddard Stark", queen="Catelyn Stark", 
+                               allegiance="Robert Baratheon")
+print(eddard_stark)
+# Name:Eddard Stark
+# Queen:Catelyn Stark
+# Allegiance:Robert Baratheon
+```
+
+
+### Get Function Reference from Class Path
+
+```python
+from genos import get_method
+
+method_path = "genos.examples.multiply"
+method_reference = get_method(method_path)
+
+result = method_reference(2, 3.5)
+print(result)
+# 7.0
+```
+
+
+# Dev Setup
+
+## Prerequisites
+
+- Python >=3.5
+- Tested on Mac 10.15.6 Catalina, Ubuntu 18.04
+
+
+## Install Bleeding-edge Version 
+
+```shell script
+# clone the repo
+$ git clone https://github.com/Neural-Space/genos.git
+# Install system-level dependencies
+$ make install-system-deps
+ # Install environment level dependencies
+$ make install-deps
+```
+
+### Testing and Code formatting
+
+```shell script
+# run the tests to make sure everything works
+$ make unit-test
+
+# check coverage of the code
+$ make test-coverage
+```
+
+# Contribution guide
+Read the contribution guideline over [here](https://github.com/Neural-Space/genos/blob/%232-advanced-docs/CONTRIBUTING.md).

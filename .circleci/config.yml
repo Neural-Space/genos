@@ -75,45 +75,45 @@ jobs:
       - image: circleci/python:3.7.7
     steps:
       - checkout
-      run:
-        name: install system level dependencies
-        command: |
-          python3 -m venv venv
-          . venv/bin/activate
-          make install-system-deps
+      - run:
+          name: install system level dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            make install-system-deps
 
-      run:
-        name: install dependencies
-        command: |
-          python3 -m venv venv
-          . venv/bin/activate
-          make install-deps
+      - run:
+          name: install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            make install-deps
       
-      run:
-        name: verify git tag vs. version
-        command: |
-          python3 -m venv venv
-          . venv/bin/activate
-          python setup.py verify
+      - run:
+          name: verify git tag vs. version
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            python setup.py verify
 
-      run:
-        name: init .pypirc
-        command: |
-          echo -e "[pypi]" >> ~/.pypirc
-          echo -e "username = neuralspace" >> ~/.pypirc
-          echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
+      - run:
+          name: init .pypirc
+          command: |
+            echo -e "[pypi]" >> ~/.pypirc
+            echo -e "username = neuralspace" >> ~/.pypirc
+            echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
       
-      run:
-        name: create package
-        command: |
-          . venv/bin/activate
-          python setup.py sdist bdist_wheel
+      - run:
+          name: create package
+          command: |
+            . venv/bin/activate
+            python setup.py sdist bdist_wheel
       
-      run:
-        name: upload to pypi
-        command: |
-          . venv/bin/activate
-          twine upload dist/*
+      - run:
+          name: upload to pypi
+          command: |
+            . venv/bin/activate
+            twine upload dist/*
 
 ############
 # Workflows

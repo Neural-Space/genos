@@ -74,7 +74,8 @@ jobs:
     docker:
       - image: circleci/python:3.7.7
     steps:
-      - checkout
+      - attach_workspace:
+          at: /home/circleci
       - run:
           name: verify git tag vs. version
           command: make verify-version-tag

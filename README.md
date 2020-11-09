@@ -3,7 +3,34 @@
 [![CircleCI](https://circleci.com/gh/Neural-Space/genos.svg?style=shield&circle-token=3658f580f8183f441023a1a4234716410bd74338)](https://app.circleci.com/pipelines/github/Neural-Space)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Instantiate objects and call functions using dictionary configs in Python using Genos.  
+Instantiate objects and call functions using dictionary configs in Python using Genos. 
+This package was originally developed to help python developers in making configurable software components. 
+
+While [Hydra](https://github.com/facebookresearch/hydra) lets you instantiate objects and functions, it doesn't support recursive instantiation. 
+Plus, Hydra is mostly used for config management. 
+So, we decided to build Genos by refering to Hydra and added the functionality of recursive instantiation. E.g.,
+
+**Install Genos**
+```bash
+pip install genos
+```
+
+Instantiate a Python Class
+```python
+from genos import recursive_instantiate
+
+ned = {
+    "cls": "genos.examples.King",
+    "params":{
+        "name": "Eddard Stark",
+        "queen": "Catelyn Stark",
+        "allegiance": "Robert Baratheon"
+    }
+}
+
+obj = recursive_instantiate(ned)
+print(obj)
+```   
 
 [![](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/images/0)](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/links/0)[![](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/images/1)](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/links/1)[![](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/images/2)](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/links/2)[![](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/images/3)](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/links/3)[![](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/images/4)](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/links/4)[![](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/images/5)](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/links/5)[![](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/images/6)](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/links/6)[![](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/images/7)](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/links/7)
 

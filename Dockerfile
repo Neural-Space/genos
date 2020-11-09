@@ -24,7 +24,7 @@ RUN poetry config virtualenvs.create true
 # install python dependencies
 ADD pyproject.toml .
 ADD poetry.lock .
-ADD src/my_package/__init__.py my_package/__init__.py
+ADD src/genos/__init__.py genos/__init__.py
 
 RUN poetry run pip install pip==20.0.2
 RUN poetry install --no-dev
@@ -34,7 +34,7 @@ ADD Makefile .
 RUN rm -rf /root/.cache/pip \
     && rm -rf /root/.cache/pypoetry/cache
 
-ADD src/my_package ./my_package
+ADD src/genos ./genos
 ADD utility-scripts ./utility-scripts
 
 FROM BASE as DEV

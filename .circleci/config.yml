@@ -25,7 +25,7 @@ jobs:
 
       - run:
           name: Install system requirements
-          command: make bootstrap-user
+          command: make install-system-deps
 
       - save_cache:
           key: deps1-{{ checksum "Makefile" }}
@@ -39,7 +39,6 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            poetry config http-basic.neuralspace ${NS_AZURE_ARTIFACTS_USERNAME} ${NS_AZURE_ARTIFACTS_PASSWORD}
             make poetry-setup
 
 
@@ -68,8 +67,28 @@ jobs:
 
       - run:
           name: Testing
-          command: make test
+          command: make unit-test
+  
+  deploy:
+    working_directory: ~/workdir
+    docker:
+      - image: circleci/python:3.7.7
+    steps:
+      - checkout
+      - run:
+          name: verify git tag vs. version
+          command: make verify-version-tag
 
+      - run:
+          name: init .pypirc
+          command: |
+            echo -e "[pypi]" >> ~/.pypirc
+            echo -e "username = neuralspace" >> ~/.pypirc
+            echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
+      
+      - run:
+          name: create package
+          command: make package-upload
 
 ############
 # Workflows
@@ -83,3 +102,11 @@ workflows:
       - test:
           requires:
             - install-dependencies
+      - deploy:
+          requires:
+            - test
+          filters:
+            tags:
+              only: /[0-9]+.[0-9]+.[0-9]+[a-z]*/
+            branches:
+              ignore: /.*/

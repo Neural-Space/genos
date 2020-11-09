@@ -99,9 +99,15 @@ workflows:
   build_test:
     jobs:
       - install-dependencies
+          filters:
+            tags:
+              only: /.*/
       - test:
           requires:
             - install-dependencies
+          filters:
+            tags:
+              only: /.*/
       - deploy:
           requires:
             - test

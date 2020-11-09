@@ -405,3 +405,6 @@ $ make test-coverage
 
 # Contribution guide
 Read the contribution guideline over [here](https://github.com/Neural-Space/genos/blob/%232-advanced-docs/CONTRIBUTING.md).
+
+# Attribution
+Icons made by <a href="https://www.flaticon.com/authors/skyclick" title="Skyclick">Skyclick</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>

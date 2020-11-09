@@ -1,5 +1,4 @@
-
-# Genos
+#                                                                                    Genos
 [![CircleCI](https://circleci.com/gh/Neural-Space/genos.svg?style=shield&circle-token=3658f580f8183f441023a1a4234716410bd74338)](https://app.circleci.com/pipelines/github/Neural-Space)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/Neural-Space/genos.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Neural-Space/genos/context:python)

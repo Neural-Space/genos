@@ -396,7 +396,7 @@ print(result)
 - Tested on Mac 10.15.6 Catalina, Ubuntu 18.04
 
 
-## Install Bleeding-edge Version 
+## Install Bleeding Edge Version 
 
 ```shell script
 # clone the repo

@@ -110,7 +110,8 @@ print(obj)
 # Sigil:Direwolf
 ```
 
-### Instantiation Using Positional Arguments
+### Instantiation Using Positional Arguments  
+The examples shown above always use keyword arguments to instantiate the classes. But we can also choose to simply pass in the positional arguments as shown below.  
 
 ```python
 from genos import recursive_instantiate
@@ -140,7 +141,7 @@ print(obj)
 ```
 
 ### Instantiation Using Positional and Keyword Arguments
-
+The following example makes use of both positional and keyword arguments together to instantiate the `House` class. We do not pass the keyword for the `king` parameter but we do so for the following parameters:`home` and `sigil`.
 ```python
 from genos import recursive_instantiate
 
@@ -171,7 +172,7 @@ print(obj)
 ```
 
 ### Call A Function
-
+Just like we classes, we can also instantiate functions by calling `recursive_instantiate`. The following example shows how we can instantiate and call a simple `multiply` function using `genos`.
 ```python
 from genos import recursive_instantiate
 
@@ -197,8 +198,7 @@ pip install torch
 ```
 
 Such workflows where we need to instantiate multiple classes recursively is more evident in Deep Learning and related fields. 
-**TODO**
-We created this tool to make things easier for us. 
+NeuralSpace has been actively working in this space, building tools for Natural Language Processing (NLP). We have created this tool to make things easier for us. 
 The following example shows a scenario where you need different components/modules to create your own custom neural network for some specific task. The individual classes are merely wrappers around `PyTorch` functions. Let's get started.
 
 The following example classes can be found in `genos.examples.complex_examples.py`.
@@ -313,7 +313,7 @@ print(out.shape)
 ```
 
 ### Get Class Reference from Class Path
-
+If you do not wish to use `genos` for instantiating your functions or classes, you can still use it to find and load different classes within your project structure. The following example shows the usage of `get_class()` function from `genos` to locate the `King` class.
 ```python
 from genos import get_class
 
@@ -330,7 +330,7 @@ print(eddard_stark)
 
 
 ### Get Function Reference from Class Path
-
+Similar to the `get_class()` method above, you can also use `get_method()` function from `genos` to find functions in your project structure and instantiate them normally.
 ```python
 from genos import get_method
 

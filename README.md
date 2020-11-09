@@ -1,8 +1,22 @@
-# Genos
-[![CircleCI](https://circleci.com/gh/Neural-Space/genos.svg?style=shield&circle-token=3658f580f8183f441023a1a4234716410bd74338)](https://app.circleci.com/pipelines/github/Neural-Space)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/Neural-Space/genos.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Neural-Space/genos/context:python)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/Neural-Space/genos.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Neural-Space/genos/alerts/)
+<p align="center"><img src="https://github.com/Neural-Space/genos/blob/%232-advanced-docs/Logo%20v1.png" alt="logo" width="70%" /></p>  
+<p align="center">
+  <a href="https://app.circleci.com/pipelines/github/Neural-Space">
+    <img src="https://circleci.com/gh/Neural-Space/genos.svg?style=shield&circle-token=3658f580f8183f441023a1a4234716410bd74338" alt="CircleCI" />
+  </a>
+  <a href="https://lgtm.com/projects/g/Neural-Space/genos/alerts/">
+    <img src="https://img.shields.io/lgtm/alerts/g/Neural-Space/genos.svg?logo=lgtm&logoWidth=18" alt="Total alerts" />
+  </a>
+  <a href="https://lgtm.com/projects/g/Neural-Space/genos/context:python">
+    <img src="https://img.shields.io/lgtm/grade/python/g/Neural-Space/genos.svg?logo=lgtm&logoWidth=18" alt="Language grade: Python" />
+  </a>
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="mit" />
+  </a>
+</p>
+
+--------------------------------------
+
+
 
 Instantiate objects and call functions using dictionary configs in Python using Genos. 
 This package was originally developed to help python developers in making configurable software components. 

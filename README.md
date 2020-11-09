@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/Neural-Space/genos/blob/%232-advanced-docs/Logo%20v1.png" alt="logo" width="70%" /></p>  
+<p align="center"><img src="https://github.com/Neural-Space/genos/blob/%232-advanced-docs/logo.png" alt="logo" width="70%" /></p>  
 <p align="center">
   <a href="https://app.circleci.com/pipelines/github/Neural-Space">
     <img src="https://circleci.com/gh/Neural-Space/genos.svg?style=shield&circle-token=3658f580f8183f441023a1a4234716410bd74338" alt="CircleCI" />

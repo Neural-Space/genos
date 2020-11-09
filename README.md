@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/Neural-Space/genos/blob/main/logo.png" alt="logo" width="70%" /></p>  
+<p align="center"><img src="https://docs.google.com/drawings/d/e/2PACX-1vQ65pCWYymvOtQXCUSsWfq0xeaE6fFmQ-_QT003eZRbeLiwKoE7xvDe6fCeuBx_ha7aCjpN3mu_WLl9/pub?w=1536&h=480" alt="logo" width="70%" /></p>  
 <p align="center">
   <a href="https://app.circleci.com/pipelines/github/Neural-Space">
     <img src="https://circleci.com/gh/Neural-Space/genos.svg?style=shield&circle-token=3658f580f8183f441023a1a4234716410bd74338" alt="CircleCI" />
@@ -418,7 +418,7 @@ $ make test-coverage
 ```
 
 # Contribution guide
-Read the contribution guideline over [here](https://github.com/Neural-Space/genos/blob/%232-advanced-docs/CONTRIBUTING.md).
+Read the contribution guideline over [here](https://github.com/Neural-Space/genos/blob/main/CONTRIBUTING.md).
 
 # Attribution
 Icons made by <a href="https://www.flaticon.com/authors/skyclick" title="Skyclick">Skyclick</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>

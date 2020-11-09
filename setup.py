@@ -33,6 +33,7 @@ setuptools.setup(
     version=VERSION,
     description='Instantiate objects and call functions using dictionary configs in Python using Genos.',
     long_description=long_description,
+    long_description_content_type='text/markdown',
     url='https://github.com/Neural-Space/genos',
     author='Kushal Jain',
     author_email='kushal@neuralspace.ai',

@@ -337,8 +337,6 @@ def recursive_instantiate(
     Return:
        - instance of the class
     """
-    import copy
-
     if isinstance(config, Dict):
         config = OmegaConf.create(config)
 

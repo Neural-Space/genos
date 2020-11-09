@@ -75,7 +75,7 @@ jobs:
       - image: circleci/python:3.7.7
     steps:
       - checkout
-        - run:
+      - run:
           name: verify git tag vs. version
           command: |
             . venv/bin/activate

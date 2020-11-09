@@ -6,6 +6,7 @@ labels: ''
 assignees: ''
 
 ---
+For a new feature, assign [@dashayushman](https://github.com/dashayushman) and for functional changes to the project, assign [@kushalj001](https://github.com/kushalj001)
 
 **Is your feature request related to a problem? Please describe.**
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]

@@ -17,7 +17,7 @@ jobs:
       - checkout
 
       - restore_cache:
-          key: deps14-{{ checksum "Makefile" }}
+          key: deps15-{{ checksum "Makefile" }}
 
       - run:
           name: BASH_ENV PATH
@@ -28,13 +28,13 @@ jobs:
           command: make install-system-deps
 
       - save_cache:
-          key: deps1-{{ checksum "Makefile" }}
+          key: deps15-{{ checksum "Makefile" }}
           paths:
             - /home/circleci/.local
 
       - restore_cache:
           keys:
-            - deps1-{{ checksum "poetry.lock" }}-{{ checksum "Makefile" }}
+            - deps15-{{ checksum "poetry.lock" }}-{{ checksum "Makefile" }}
 
       - run:
           name: Install dependencies
@@ -43,7 +43,7 @@ jobs:
 
 
       - save_cache:
-          key: deps1-{{ checksum "poetry.lock" }}-{{ checksum "Makefile" }}
+          key: deps15-{{ checksum "poetry.lock" }}-{{ checksum "Makefile" }}
           paths:
             - ".venv"
 

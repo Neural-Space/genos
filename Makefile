@@ -68,3 +68,21 @@ coverage:
 # Run tests and coverage
 .PHONY: test-coverage
 test-coverage: unit-test coverage
+
+
+.PHONY: verify-version-tag
+verify-version-tag:
+	PYTHONPATH='./src/' poetry run python setup.py verify
+
+.PHONY: package-upload
+package-upload:
+	if [ -d "./build" ]; then rm -rf "./build"; fi
+	if [ -d "./dist" ]; then rm -rf "./dist"; fi
+	if [ -d "./src/panini.egg-info" ]; then rm -rf "./src/panini.egg-info"; fi
+
+	PYTHONPATH=./src poetry run python setup.py sdist bdist_wheel
+	twine upload dist/*
+
+	if [ -d "./build" ]; then rm -rf ./build; fi
+	if [ -d "./dist" ]; then rm -rf ./dist; fi
+	if [ -d "./src/panini.egg-info" ]; then rm -rf ./src/panini.egg-info; fi

@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 import pathlib
+import sys
+
 import setuptools
 from setuptools.command.install import install
 import os
@@ -19,10 +21,12 @@ class VerifyVersionCommand(install):
         tag = os.getenv('CIRCLE_TAG')
 
         if tag != VERSION:
-            info = "Git tag: {0} does not match the version of this app: {1}".format(
+            info = "Git tag: {0} does not match the version of this app: {1}. " \
+                   "Update version in src/genos/version.py".format(
                 tag, VERSION
             )
             sys.exit(info)
+
 
 setuptools.setup(
     name='genos',
@@ -48,7 +52,7 @@ setuptools.setup(
     ],
     python_requires='>=3.7, <4',
     package_dir={'': 'src'},
-    packages=setuptools.find_packages(where='src')
+    packages=setuptools.find_packages(where='src'),
     cmdclass={
         'verify': VerifyVersionCommand,
     }

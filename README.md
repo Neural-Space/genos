@@ -8,14 +8,15 @@ This package was originally developed to help python developers in making config
 
 While [Hydra](https://github.com/facebookresearch/hydra) lets you instantiate objects and functions, it doesn't support recursive instantiation. 
 Plus, Hydra is mostly used for config management. 
-So, we decided to build Genos by refering to Hydra and added the functionality of recursive instantiation. E.g.,
+So, we decided to build Genos by referring to Hydra and added the functionality of recursive instantiation. E.g.,
 
 **Install Genos**
 ```bash
 pip install genos
 ```
 
-Instantiate a Python Class
+Instantiate a Python Class using Genos
+
 ```python
 from genos import recursive_instantiate
 
@@ -31,6 +32,8 @@ ned = {
 obj = recursive_instantiate(ned)
 print(obj)
 ```   
+
+# Contributors
 
 [![](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/images/0)](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/links/0)[![](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/images/1)](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/links/1)[![](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/images/2)](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/links/2)[![](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/images/3)](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/links/3)[![](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/images/4)](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/links/4)[![](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/images/5)](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/links/5)[![](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/images/6)](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/links/6)[![](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/images/7)](https://sourcerer.io/fame/kushalj001/Neural-Space/genos/links/7)
 

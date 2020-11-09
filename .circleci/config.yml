@@ -76,23 +76,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: install system level dependencies
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            make install-system-deps
-
-      - run:
-          name: install dependencies
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            make install-deps
-      
-      - run:
           name: verify git tag vs. version
           command: |
-            python3 -m venv venv
             . venv/bin/activate
             python setup.py verify
 
@@ -105,9 +90,7 @@ jobs:
       
       - run:
           name: create package
-          command: |
-            . venv/bin/activate
-            python setup.py sdist bdist_wheel
+          command: make package-upload
       
       - run:
           name: upload to pypi

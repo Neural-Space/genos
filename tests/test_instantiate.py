@@ -5,7 +5,7 @@ import pytest
 from genos import instantiate
 from genos.instantiate import ObjectConfig, RecursiveClassInstantiationError
 from omegaconf import DictConfig, OmegaConf
-
+from omegaconf.errors import ConfigKeyError
 
 class Level3:
     def __init__(self, a_3: str, b_3: int = 10):
@@ -376,7 +376,7 @@ def test_recursive_instantiate(
             {"classsss": "tests.test_instantiate.SomeLevel", "params": {}},
             [],
             ValueError,
-            RecursiveClassInstantiationError,
+            ConfigKeyError,
         ),
         (
             None,

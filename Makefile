@@ -1,6 +1,6 @@
 # Setup the environment
 
-SYSTEM_DEPENDENCIES := poetry==1.1.3 pre-commit coveralls flake8
+SYSTEM_DEPENDENCIES := poetry==1.1.12 pre-commit coveralls flake8 virtualenv==20.6.0
 
 .PHONY: check-py3
 check-py3:
@@ -24,7 +24,7 @@ install-system-deps: check-py3 install-system-python-deps
 .PHONY: poetry-setup
 poetry-setup:
 	poetry config virtualenvs.in-project true
-	poetry run pip install pip==20.0.2
+	poetry run pip install pip==21.3.1
 	poetry install
 
 ## Setup pre-commit

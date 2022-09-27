@@ -7,6 +7,7 @@ from genos.instantiate import ObjectConfig, RecursiveClassInstantiationError
 from omegaconf import DictConfig, OmegaConf
 from omegaconf.errors import ConfigKeyError
 
+
 class Level3:
     def __init__(self, a_3: str, b_3: int = 10):
         self.a_3 = a_3
@@ -43,6 +44,14 @@ class Level1:
 
             return self.a_1 == other.a_1
         return NotImplemented
+
+
+def get_b():
+    return 2
+
+
+def test_method(a, b):
+    return a + b
 
 
 # The following code block was taken from Hydra
@@ -334,7 +343,21 @@ def test_class_warning() -> None:
             None,
             {},
             Level1(a_1=Level2(a_2=Level3(a_3="a_3", b_3=11), b_2=42)),
-        )
+        ),
+        (
+            {
+                "cls": "tests.test_instantiate.test_method",
+                "params": {
+                    "a": 1,
+                    "b": {
+                        "cls": "tests.test_instantiate.get_b",
+                    },
+                },
+            },
+            None,
+            {},
+            3,
+        ),
     ],
 )
 def test_recursive_instantiate(

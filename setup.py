@@ -49,7 +49,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3.7",
     ],
     install_requires=[
-        "omegaconf>=2.1.0"
+        "omegaconf>=2.3.0"
     ],
     python_requires='>=3.7, <4',
     package_dir={'': 'src'},

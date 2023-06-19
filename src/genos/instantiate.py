@@ -193,7 +193,7 @@ def __get_kwargs(class_config: Union[ObjectConfig, DictConfig], **kwargs: Any) -
     primitives = {}
     rest = {}
     for k, v in kwargs.items():
-        if _utils.is_primitive_type(v) or isinstance(v, (dict, list)):
+        if _utils.is_primitive_type_annotation(v) or isinstance(v, (dict, list)):
             primitives[k] = v
         else:
             rest[k] = v

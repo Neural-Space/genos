@@ -50,7 +50,7 @@ def get_b():
     return 2
 
 
-def test_method(a, b):
+def dummy_test_method(a, b):
     return a + b
 
 
@@ -346,7 +346,7 @@ def test_class_warning() -> None:
         ),
         (
             {
-                "cls": "tests.test_instantiate.test_method",
+                "cls": "tests.test_instantiate.dummy_test_method",
                 "params": {
                     "a": 1,
                     "b": {
